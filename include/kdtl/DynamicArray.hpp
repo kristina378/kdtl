@@ -55,32 +55,30 @@ class DynamicArray {
     /* Add element at the end of the array. This will require resizing array and
     copying all elements, as there is no way to change size of allocation. */
     void push(T value) {
-        T* new_array = new T[size + 1];
-
-        for (int64_t index = 0; index < size; index++) {
-            new_array[index] = data[index];
-        }
-
-        new_array[size] = value;
-         delete[] data;      
-        data = new_array;
-        size++;
+        reallocate(size + 1);
+        data[size - 1] = value;
     }
     /* Remove element from the end of the array. */
-    T pop() {
-         T* new_array = new T[size - 1];
-
-        for (int64_t index = 0; index < size-1; index++) {
-            new_array[index] = data[index];
-        }
-        T value = data[size-1];
-        delete[] data;
-        data = new_array;
-        size--;
+    T pop() { // render whitespace
+        T value = data[size - 1];
+        reallocate(size - 1);
         return value;
     }
     /* Length of the array. */
     int64_t lenght() {
         return size;
+    }
+
+  private:
+    /* Reallocate array to new size. */
+    void reallocate(int64_t new_size) {
+        T* new_array = new T[new_size];
+        int64_t size_to_copy = new_size < size ? new_size : size;
+        for (int64_t index = 0; index < size_to_copy; index++) {
+            new_array[index] = data[index];
+        }
+        delete[] data;
+        data = new_array;
+        size = new_size;
     }
 };
