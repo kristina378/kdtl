@@ -22,11 +22,21 @@ int main() {
     std::cout << array3.get(1) << std::endl;
     std::cout << array3.get(2) << std::endl;
 
+    std::cout << "lenght " << array3.lenght() << std::endl;
+    std::cout << "capacity " << array3.capacity() << std::endl;
     array3.push(3.0f);
+
+    std::cout << "lenght " << array3.lenght() << std::endl;
+    std::cout << "capacity " << array3.capacity() << std::endl;
+    array3.push(7.0f);
+
+    std::cout << "lenght " << array3.lenght() << std::endl;
+    std::cout << "capacity " << array3.capacity() << std::endl;
 
     std::cout << array3.get(3) << std::endl;
 
     std::cout << "lenght " << array3.lenght() << std::endl;
     std::cout << "pop " << array3.pop() << std::endl;
     std::cout << "lenght " << array3.lenght() << std::endl;
+    std::cout << "capacity " << array3.capacity() << std::endl;
 }
