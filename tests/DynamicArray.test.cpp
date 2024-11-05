@@ -33,7 +33,7 @@ TEST_CASE("DynamicArray<int,5>::begin; DynamicArray<int,5>::end", "[DynamicArray
     REQUIRE(iterator == array1.end());
 }
 
-TEST_CASE("DynamicArray<int,5>::set","[DynamicArray]") {
+TEST_CASE("DynamicArray<int,5>::set", "[DynamicArray]") {
     DynamicArray<int> array = {1, 2, 3, 4, 5};
     array.set(0, 3);
     array.set(1, 4);
@@ -47,8 +47,19 @@ TEST_CASE("DynamicArray<int,5>::set","[DynamicArray]") {
     REQUIRE(array.get(3) == 6);
     REQUIRE(array.get(4) == 7);
 };
-TEST_CASE("DynamicArray<int,5>::push","[DynamicArray]"){
-DynamicArray<int> array = {1, 2, 3, 4, 5};
-array.push(12);
-REQUIRE(array.get(5)==12);
+
+TEST_CASE("DynamicArray<int,5>::push", "[DynamicArray]") {
+    DynamicArray<int> array = {1, 2, 3, 4, 5};
+    array.push(12);
+    REQUIRE(array.get(5) == 12);
+    array.push(54);
+    REQUIRE(array.get(6) == 54);
+};
+
+TEST_CASE("DynamicArray<int,5>::pop", "[DynamicArray]") {
+    DynamicArray<int> array1 = {1, 2, 3, 4, 5};
+    array1.pop();
+    REQUIRE(array1.lenght() == 4);
+    array1.pop();
+    REQUIRE(array1.lenght() == 3);
 };
