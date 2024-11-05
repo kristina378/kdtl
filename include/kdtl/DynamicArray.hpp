@@ -1,14 +1,22 @@
 #include <cstdint>
 #include <initializer_list>
+#include <stdexcept>
 
 // template<class T,class Allocayor= std::allocator<T>>class vector;
 template <class T>
 class DynamicArray {
     T*      data_     = nullptr;
-    int64_t length_     = 0;
+    int64_t length_   = 0;
     int64_t capacity_ = 1;
 
   public:
+    DynamicArray() = delete;
+    DynamicArray(const DynamicArray&) = delete;
+    DynamicArray(DynamicArray&&) = delete;
+
+    DynamicArray& operator=(const DynamicArray&) = delete;
+    DynamicArray& operator=(DynamicArray&&) = delete;
+
     /* Ctor with initialization of array with values from different collection. */
     DynamicArray(std::initializer_list<T> initializer) {
         length_ = initializer.size();
@@ -74,6 +82,12 @@ class DynamicArray {
 
     /* Remove element from the end of the array. */
     T pop() {
+#ifdef NDEBUG
+#else
+        if (length_ == 0) {
+            throw std::out_of_range("Can't pop from empty array.");
+        }
+#endif
         length_--;
         // Technically, we should invoke destructor of the element removed or sth.
         return data_[length_];
@@ -89,14 +103,13 @@ class DynamicArray {
         return capacity_;
     }
 
-
   private:
     /* Reallocate array to new size. */
     void reallocate(int64_t new_capacity) {
         if (new_capacity <= capacity_) {
             return;
         }
-        capacity_ = new_capacity;
+        capacity_    = new_capacity;
         T* new_array = new T[capacity_];
 
         for (int64_t index = 0; index < length_; index++) {
