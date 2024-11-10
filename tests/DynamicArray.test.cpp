@@ -99,3 +99,7 @@ TEST_CASE("DynamicArray<int>::pop from empty array", "[DynamicArray]") {
     DynamicArray<int> array({});
     REQUIRE_THROWS(array.pop());
 };
+
+TEST_CASE("DynamicArray<int>::realocate","[DynamicArray]"){
+    
+};
