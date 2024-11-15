@@ -1,6 +1,8 @@
 #include "kdtl/StaticArray.hpp"
 #include <catch2/catch_test_macros.hpp>
 
+using namespace kdtl;
+
 TEST_CASE("Construct StaticArray<int, 4>", "[StaticArray]") {
     // first step: setup
     StaticArray<int, 4> array{0, 1, 2, 3};

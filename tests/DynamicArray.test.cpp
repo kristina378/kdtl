@@ -1,6 +1,8 @@
 #include "kdtl/DynamicArray.hpp"
 #include <catch2/catch_test_macros.hpp>
 
+using namespace kdtl;
+
 TEST_CASE("Constructor DynamicArray<int> non empty", "[DynamicArray]") {
     DynamicArray<int> array = {1, 2, 3, 4, 5};
 
@@ -100,6 +102,6 @@ TEST_CASE("DynamicArray<int>::pop from empty array", "[DynamicArray]") {
     REQUIRE_THROWS(array.pop());
 };
 
-TEST_CASE("DynamicArray<int>::realocate","[DynamicArray]"){
-    
+TEST_CASE("DynamicArray<int>::realocate", "[DynamicArray]"){
+
 };
