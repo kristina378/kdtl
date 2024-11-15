@@ -1,8 +1,7 @@
-#include <cstdint>
+#pragma once
+#include <kdtl/Common.hpp>
 
 namespace kdtl {
-    using size_t = int64_t;
-
     template <class T>
     class BasicString {
       public:

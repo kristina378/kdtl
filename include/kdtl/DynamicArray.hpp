@@ -1,13 +1,14 @@
-#include <cstdint>
+#pragma once
 #include <initializer_list>
 #include <stdexcept>
+#include <kdtl/Common.hpp>
 
 namespace kdtl {
     template <class T>
     class DynamicArray {
         T*      data_     = nullptr;
-        int64_t length_   = 0;
-        int64_t capacity_ = 1;
+        size_t length_   = 0;
+        size_t capacity_ = 1;
 
       public:
         DynamicArray()                    = delete;
@@ -24,7 +25,7 @@ namespace kdtl {
             for (; capacity_ <= length_; capacity_ <<= 1) {}
             data_ = new T[capacity_];
 
-            int64_t index = 0;
+            size_t index = 0;
             for (auto& element : initializer) {
                 data_[index] = element;
                 index++;
@@ -60,13 +61,13 @@ namespace kdtl {
 
         /* Element getter. Elements returned are strictly const references, they
         can't be directly modified. */
-        const T& get(int64_t index) {
+        const T& get(size_t index) {
             return data_[index];
         }
 
         /* Element setter. Please note that you can not set element outside of the array,
         ie. with indec >= length(). */
-        void set(int64_t index, const T& value) {
+        void set(size_t index, const T& value) {
             data_[index] = value;
         }
 
@@ -94,25 +95,25 @@ namespace kdtl {
         }
 
         /* Length of the array. */
-        int64_t lenght() {
+        size_t lenght() {
             return length_;
         }
 
         /* Capacity of the array. */
-        int64_t capacity() {
+        size_t capacity() {
             return capacity_;
         }
 
       private:
         /* Reallocate array to new size. */
-        void reallocate(int64_t new_capacity) {
+        void reallocate(size_t new_capacity) {
             if (new_capacity <= capacity_) {
                 return;
             }
             capacity_    = new_capacity;
             T* new_array = new T[capacity_];
 
-            for (int64_t index = 0; index < length_; index++) {
+            for (size_t index = 0; index < length_; index++) {
                 new_array[index] = data_[index];
             }
 

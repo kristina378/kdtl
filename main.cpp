@@ -1,8 +1,8 @@
 #include "kdtl/DynamicArray.hpp"
 #include "kdtl/StaticArray.hpp"
 #include <_strings.h>
-#include <array>
 #include <iostream>
+using namespace kdtl;
 
 int main() {
     /* int array[10];

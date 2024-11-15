@@ -1,15 +1,16 @@
 #pragma once
-#include <cstdint>
 #include <initializer_list>
+#include <kdtl/Common.hpp>
+
 
 namespace kdtl {
-    template <class T, int64_t size>
+    template <class T, size_t size>
     class StaticArray {
         T data[size];
 
       public:
         StaticArray(std::initializer_list<T> values) {
-            int64_t index = 0;
+            size_t index = 0;
             for (auto& element : values) {
                 data[index] = element;
                 index++;
@@ -27,15 +28,15 @@ namespace kdtl {
             return &data[size];
         }
 
-        const T& get(int64_t index) {
+        const T& get(size_t index) {
             return data[index];
         }
 
-        void set(int64_t index, const T& value) {
+        void set(size_t index, const T& value) {
             data[index] = value;
         }
 
-        int64_t lenght() {
+        size_t lenght() {
             return size;
         }
     };
