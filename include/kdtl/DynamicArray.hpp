@@ -1,12 +1,21 @@
 #pragma once
 #include <initializer_list>
-#include <stdexcept>
 #include <kdtl/Common.hpp>
+#include <stdexcept>
 
 namespace kdtl {
     template <class T>
     class DynamicArray {
-        T*      data_     = nullptr;
+      public:
+        using value_t           = T;
+        using const_value_t     = const T;
+        using value_t_ptr       = value_t*;
+        using const_value_t_ptr = const_value_t*;
+        using value_t_ref       = value_t&;
+        using const_value_t_ref = const_value_t&;
+
+      private:
+        value_t_ptr     data_     = nullptr;
         size_t length_   = 0;
         size_t capacity_ = 1;
 
@@ -19,11 +28,11 @@ namespace kdtl {
         DynamicArray& operator=(DynamicArray&&)      = delete;
 
         /* Ctor with initialization of array with values from different collection. */
-        DynamicArray(std::initializer_list<T> initializer) {
+        DynamicArray(std::initializer_list<value_t> initializer) {
             length_ = initializer.size();
             // Loop until we find power of 2 that is greater than or equal to size.
             for (; capacity_ <= length_; capacity_ <<= 1) {}
-            data_ = new T[capacity_];
+            data_ = new value_t[capacity_];
 
             size_t index = 0;
             for (auto& element : initializer) {
@@ -39,7 +48,7 @@ namespace kdtl {
         }
 
         /* Iterator to first element of array. */
-        T* begin() {
+        value_t_ptr begin() {
             // In this case it is simply a pointer, since pointers support dereferencing
             // and incrementation to walk through consecutive elements.a
             // However! it is possible to use some dedicated class instance to do that,
@@ -51,7 +60,7 @@ namespace kdtl {
         }
 
         /* Iterator to last element of array. */
-        T* end() {
+        value_t_ptr end() {
             // End iterator should point to element **after** last element in the array, ie.
             // dereferencing it is not a valid operation! So, it can be used to check
             // when iterator initialized with begin() becomes invalid (saturated), as it
@@ -61,19 +70,19 @@ namespace kdtl {
 
         /* Element getter. Elements returned are strictly const references, they
         can't be directly modified. */
-        const T& get(size_t index) {
+        const_value_t_ref get(size_t index) {
             return data_[index];
         }
 
         /* Element setter. Please note that you can not set element outside of the array,
         ie. with indec >= length(). */
-        void set(size_t index, const T& value) {
+        void set(size_t index, const_value_t_ref value) {
             data_[index] = value;
         }
 
         /* Add element at the end of the array. This will require resizing array and
         copying all elements, as there is no way to change size of allocation. */
-        void push(T value) {
+        void push(const_value_t_ref value) {
             if ((length_ + 1) > capacity_) {
                 reallocate(capacity_ << 1);
             }
@@ -82,7 +91,7 @@ namespace kdtl {
         }
 
         /* Remove element from the end of the array. */
-        T pop() {
+        value_t pop() {
 #ifdef NDEBUG
 #else
             if (length_ == 0) {
@@ -111,7 +120,7 @@ namespace kdtl {
                 return;
             }
             capacity_    = new_capacity;
-            T* new_array = new T[capacity_];
+            value_t_ptr new_array = new value_t[capacity_];
 
             for (size_t index = 0; index < length_; index++) {
                 new_array[index] = data_[index];
