@@ -1,5 +1,6 @@
 #pragma once
 #include <kdtl/Common.hpp>
+#include <kdtl/Hash.hpp>
 
 namespace kdtl {
     template <class T>
@@ -34,6 +35,10 @@ namespace kdtl {
             }
         };
 
+        ~BasicString() {
+            delete[] data_;
+        }
+
         char_t_ptr begin() {
             return data_;
         }
@@ -66,4 +71,9 @@ namespace kdtl {
     using U8String  = BasicString<uint8_t>;
     using U16String = BasicString<uint16_t>;
     using U32String = BasicString<uint32_t>;
+
+    template <>
+    inline hash_t hash<String>(const String& value) {
+        return 0;
+    }
 } // namespace kdtl
